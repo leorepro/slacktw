@@ -185,8 +185,8 @@ li { font-size: clamp(1rem, 2.2vw, 1.15rem); color: #2b2b2b; margin-bottom: 0.6r
   line-height: 1;
   pointer-events: none;
 }
-.divider .kicker { color: var(--yellow); }
-.divider h2, .divider h3 { color: #fff; }
+.divider .kicker, .hero .kicker { color: var(--yellow); }
+.hero h1, .divider h1, .divider h2, .divider h3 { color: #fff; }
 .divider p { color: #f1e4f2; }
 .dots { display: flex; gap: 0.7rem; margin-bottom: 1.5rem; }
 .dots span { width: 16px; height: 16px; border-radius: 50%; }
