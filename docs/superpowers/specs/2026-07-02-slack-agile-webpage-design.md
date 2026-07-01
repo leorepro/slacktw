@@ -73,7 +73,7 @@
 
 ## 七、部署與 CI/CD
 
-- **Repo**：假設為使用者既有 GitHub repo（名稱 `slacktw`，owner 待使用者於實作階段確認/建立遠端並自行 push；本次工作範圍不含任何 git push 或遠端操作）。
+- **Repo**：本機目錄已是 git repo，遠端為 `origin → https://github.com/leorepro/slacktw.git`（分支 `main`）。本次工作範圍不含任何 git push 或遠端操作，程式碼會在本機 commit，push 由使用者自行執行。
 - **GitHub Actions**：push 到 `main` 分支時，自動觸發 workflow，使用官方 `actions/configure-pages` + `actions/upload-pages-artifact` + `actions/deploy-pages` 部署到 GitHub Pages（因為是純靜態檔案，不需要 build step，只需上傳整個 repo 根目錄或指定的靜態資源目錄）。
 - **GitHub repo 設定**：需在 repo 的 Settings → Pages 將來源設定為 GitHub Actions（而非傳統的 branch 部署）。
 - **自訂網域（slack.tw 為 apex/根網域）**：
