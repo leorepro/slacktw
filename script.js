@@ -51,9 +51,63 @@ function initNav() {
   sections.forEach((section) => observer.observe(section));
 }
 
+function initScrollReveal() {
+  const items = document.querySelectorAll('.reveal');
+  if (!items.length) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    items.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach((item) => observer.observe(item));
+}
+
+function initCounters() {
+  const counters = document.querySelectorAll('.counter');
+  if (!counters.length) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animate = (el) => {
+    const target = Number(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    if (prefersReduced) {
+      el.textContent = formatCounterValue(target, prefix, suffix);
+      return;
+    }
+    const duration = 1200;
+    const start = performance.now();
+    const step = (now) => {
+      const elapsed = Math.min(1, (now - start) / duration);
+      const eased = easeOutQuad(elapsed);
+      el.textContent = formatCounterValue(target * eased, prefix, suffix);
+      if (elapsed < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animate(entry.target);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach((el) => observer.observe(el));
+}
+
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     initProgressBar();
     initNav();
+    initScrollReveal();
+    initCounters();
   });
 }
